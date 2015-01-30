@@ -4,13 +4,10 @@ import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 
 import de.fhpotsdam.unfolding.providers.Microsoft;
-import de.fhpotsdam.unfolding.utils.MapUtils;
 import de.fhpotsdam.unfolding.utils.ScreenPosition;
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PShape;
 import processing.data.XML;
-import sun.nio.cs.ext.PCK;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,16 +32,12 @@ public class GooglePortraitReader {
         dates = new ArrayList< Date >(  );
         positions = new ArrayList< double[] >(  );
         loadXml( p, fileName );
-        //drawData( p, dates );
+        //getShape( p, dates );
         map.zoomAndPanTo( new de.fhpotsdam.unfolding.geo.Location( 52.473236, 13.4269905 ), 20  );
     }
 
-    public void draw() {
-        drawData( p );
-    }
-
-    private void drawData( PApplet p ) {
-        map.draw();
+    public PShape getShape( PApplet p ) {
+        //map.draw();
         //positions.removeAll( Collections.singleton( null ) );
         //dates.removeAll( Collections.singleton( null ) );
         int start = ( int ) PApplet.map( p.mouseX, 0, p.width, 0, dates.size() );
@@ -67,18 +60,11 @@ public class GooglePortraitReader {
             p.noFill();
             //System.out.println( marker.getLocation().x + " " + marker.getLocation().y );
             shp.vertex( berlinPos.x, berlinPos.y );
-            p.point( berlinPos.x, berlinPos.y );
+            //p.point( berlinPos.x, berlinPos.y );
             //System.out.println( berlinPos.toString() );
         }
         shp.endShape();
-        //p.beginShape();
-        //shp.draw( p.g );
-        p.strokeWeight( 1 );
-        p.shape( shp );
-        //p.endShape();
-        //map.addMarkers( loca );
-        //MapUtils.createDefaultEventDispatcher(p, map);
-
+        return shp;
     }
 
     private void loadXml( PApplet p, String fileName ) {
